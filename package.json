@@ -1,0 +1,80 @@
+{
+  "name": "fast-jump",
+  "displayName": "Fast Jump (C++/Proto)",
+  "description": "Instant header/source switching and include/import jumping for huge C++/Protobuf codebases, driven by simple path rules instead of a symbol index.",
+  "version": "0.1.0",
+  "publisher": "qvictl",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qvictl/vscode-fast-jump.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fastJump.switchHeaderSource",
+        "title": "Fast Jump: Switch Header/Source"
+      },
+      {
+        "command": "fastJump.gotoInclude",
+        "title": "Fast Jump: Go to Include/Import"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "fastJump.switchHeaderSource",
+        "key": "alt+o",
+        "when": "resourceLangId =~ /^(c|cpp|cuda-cpp)$/"
+      },
+      {
+        "command": "fastJump.gotoInclude",
+        "key": "alt+g",
+        "when": "resourceLangId =~ /^(c|cpp|proto|proto3|protobuf)$/"
+      }
+    ],
+    "configuration": {
+      "title": "Fast Jump",
+      "properties": {
+        "fastJump.headerExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "h"
+          ],
+          "description": "Header file extensions (no leading dot). Tried in order when switching from a source file."
+        },
+        "fastJump.sourceExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "cc",
+            "cpp"
+          ],
+          "description": "Source file extensions (no leading dot). Tried in order when switching from a header file."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.5"
+  }
+}
